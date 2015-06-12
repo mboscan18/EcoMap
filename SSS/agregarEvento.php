@@ -33,8 +33,8 @@ if (!empty($_POST)) {
     
    //No Morimos (el die de arriba) eso signfica que los campos del $_POST estan llenos (tienen datos)
    //Ahora crearemos la consulta
-    $query        = "INSERT INTO eventos (latitud, longitud, archivo, categoria_id_categoria,titulo)
-VALUES (:latitud, :longitud, :archivo, :categoria_id_categoria, :titulo) ";
+    $query = "INSERT INTO eventos (latitud, longitud, archivo, categoria_id_categoria,titulo)
+              VALUES (:latitud, :longitud, :archivo, :categoria_id_categoria, :titulo) ";
     
    //acutalizamos los tokens que son los parametros a usar en el query de arriba
     $query_params = array(
@@ -50,9 +50,13 @@ VALUES (:latitud, :longitud, :archivo, :categoria_id_categoria, :titulo) ";
     try {
          //Aqui se "prepara" la consulta y luego se ejecuto pasandole los parametros
         $stmt   = $db->prepare($query);   //Se prepara la consulta "asignar"
-        $result = $stmt->execute($query_params);  //Aqui se ejecuta con los parametros
+        $stmt->execute($query_params);  //Aqui se ejecuta con los parametros
          //La logica es que primero la asigna con el nombre de las variables y luego
          //le pasa las variables con valores "asignados" por el arreglo query_params y lo ejecuta
+        
+         //Ahora a elimiar lo el puntero, esto elimina cualquier basura que pueda
+         //haber quedado en el puntero
+        $stmt->closeCursor();
     }
     
     catch (PDOException $ex) {
@@ -79,7 +83,7 @@ VALUES (:latitud, :longitud, :archivo, :categoria_id_categoria, :titulo) ";
     
     try {
         $stmt   = $db->prepare($query);
-        $result = $stmt->execute($query_params);
+        $stmt->execute($query_params);
     }
     
     catch (PDOException $ex) {
@@ -89,11 +93,9 @@ VALUES (:latitud, :longitud, :archivo, :categoria_id_categoria, :titulo) ";
     }
     
     // Se guarda el id del evento
-   
-    
-    $eventoID =42;
-  //  $eventoID = mysqli_fetch_array($result);
-    
+        $eventoID=$stmt->fetch(PDO::FETCH_OBJ);
+        $eventoID=$eventoID->id_eventos;
+        $stmt->closeCursor();
     
     //Ahora que se tiene el id
     //Vamos a insertar el comentario
@@ -110,7 +112,8 @@ VALUES (:latitud, :longitud, :archivo, :categoria_id_categoria, :titulo) ";
     
     try {
         $stmt   = $db->prepare($query);
-        $result = $stmt->execute($query_params);
+        $stmt->execute($query_params);
+        $stmt->closeCursor();
     }
     catch (PDOException $ex) {
         $response["success"] = 0;
