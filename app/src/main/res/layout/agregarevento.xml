@@ -27,7 +27,7 @@
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/nuevo_nombre"
+        android:id="@+id/tituloEvento"
         android:inputType="text"
         android:linksClickable="false"
         android:autoText="false" />
@@ -67,7 +67,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/listo_evento"
-        android:id="@+id/listo_evento"
+        android:id="@+id/agregarEvento"
         android:layout_gravity="center_horizontal"
         android:elegantTextHeight="true" />
 

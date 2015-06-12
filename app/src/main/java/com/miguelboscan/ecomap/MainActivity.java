@@ -81,7 +81,7 @@ public class MainActivity extends ActionBarActivity {
         protected void onPreExecute() {
             super.onPreExecute();
             pDialog = new ProgressDialog(MainActivity.this);
-            pDialog.setMessage("Cargando comercios. Por favor espere...");
+            pDialog.setMessage("Cargando elementos del Servidor");
             pDialog.setIndeterminate(false);
             pDialog.setCancelable(false);
             pDialog.show();
