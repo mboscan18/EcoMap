@@ -1,4 +1,8 @@
 <resources>
     <string name="app_name">EcoMap</string>
     <string name="title_activity_mapa">EcoMap</string>
+    <string name="agregarevento_nombre">Titulo evento:</string>
+    <string name="agregarevento_comentario">Comentario:</string>
+    <string name="listo_evento">Listo</string>
+    <string name="agregar_cat_new_evento">Categoria</string>
 </resources>

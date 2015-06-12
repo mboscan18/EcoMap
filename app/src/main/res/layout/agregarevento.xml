@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:weightSum="1">
+
+    <ImageButton
+        android:layout_width="276dp"
+        android:layout_height="150dp"
+        android:id="@+id/imageButton"
+        android:layout_gravity="center_horizontal"
+        android:background="@drawable/fondo_icono_add_multimedia"
+        android:baselineAlignBottom="false"
+        android:clickable="false"
+        android:longClickable="false"
+        android:layout_weight="0.24" />
+
+    <TextView android:id="@+id/lblnombre"
+        android:layout_width="218dp"
+        android:layout_height="wrap_content"
+        android:text="@string/agregarevento_nombre"
+        android:textIsSelectable="false"
+        android:textSize="23dp"
+        android:layout_gravity="left"
+        android:layout_weight="0.14" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/nuevo_nombre"
+        android:inputType="text"
+        android:linksClickable="false"
+        android:autoText="false" />
+
+    <TextView android:id="@+id/lblcomentario"
+        android:layout_width="211dp"
+        android:layout_height="46dp"
+        android:text="@string/agregarevento_comentario"
+        android:textIsSelectable="false"
+        android:textSize="23dp"
+        android:layout_gravity="left" />
+
+    <EditText
+        android:layout_width="365dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/comentario_nuevo_evento"
+        android:layout_gravity="right"
+        android:inputType="text"/>
+
+
+    <TextView android:id="@+id/idcat"
+        android:layout_width="211dp"
+        android:layout_height="46dp"
+        android:text="@string/agregar_cat_new_evento"
+        android:textIsSelectable="false"
+        android:textSize="23dp"
+        android:layout_gravity="left" />
+
+    <EditText
+        android:layout_width="365dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/cat_event_nuevo"
+        android:layout_gravity="right"
+        android:inputType="text"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/listo_evento"
+        android:id="@+id/listo_evento"
+        android:layout_gravity="center_horizontal"
+        android:elegantTextHeight="true" />
+
+</LinearLayout>
