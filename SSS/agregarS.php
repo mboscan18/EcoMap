@@ -18,15 +18,17 @@ if (!empty($_POST)) {
         die(json_encode($response));
     }
     
-    //si no hemos muerto (die), nos fijamos si existe en la base de datos
+    //si no hemos muerto (die), nos fijamos si exist en la base de datos
     $query        = " SELECT 1 FROM users WHERE username = :user";
     
     //acutalizamos el :user
-    $query_params = array( ':user' => $_POST['username'] );
+    $query_params = array(
+        ':user' => $_POST['username']
+    );
     
     //ejecutamos la consulta
     try {
-        // estas son las dos consultas que se van a hacer en la base de datos
+        // estas son las dos consultas que se van a hacer en la bse de datos
         $stmt   = $db->prepare($query);
         $result = $stmt->execute($query_params);
     }
@@ -39,6 +41,17 @@ if (!empty($_POST)) {
         die(json_encode($response));
     }
     
+    //buscamos la información
+    //como sabemos que el usuario ya existe lo matamos
+    $row = $stmt->fetch();
+    if ($row) {
+        // Solo para testing
+        //die("This username is already in use");
+        
+        $response["success"] = 0;
+        $response["message"] = "Lo siento el usuario ya existe";
+        die(json_encode($response));
+    }
     
     //Si llegamos a este punto, es porque el usuario no existe
     //y lo insertamos (agregamos)
@@ -75,6 +88,19 @@ if (!empty($_POST)) {
     //die("Redirecting to login.php");
     
     
+} else {
+?>
+ <h1>Register</h1> 
+ <form action="register.php" method="post"> 
+     Username:<br /> 
+     <input type="text" name="username" value="" /> 
+     <br /><br /> 
+     Password:<br /> 
+     <input type="password" name="password" value="" /> 
+     <br /><br /> 
+     <input type="submit" value="Register New User" /> 
+ </form>
+ <?php
 }
 
 ?>
