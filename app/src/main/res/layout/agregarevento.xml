@@ -10,18 +10,20 @@
         android:orientation="vertical"
         android:layout_width="350dp"
         android:layout_height="550dp"
-        android:layout_centerVertical="true"
         android:layout_centerHorizontal="true"
         android:id="@+id/panel_new_evento"
         android:focusableInTouchMode="false"
-        android:weightSum="1">
+        android:weightSum="1"
+        android:layout_alignBottom="@+id/panel_new_evento1">
 
         <ImageButton
-            android:layout_width="200dp"
+            android:layout_width="100dp"
             android:layout_gravity="center"
-            android:layout_height="200dp"
+            android:layout_height="100dp"
             android:id="@+id/imageButton"
-            android:background="@drawable/fondo_icono_add_multimedia" />
+            android:background="@drawable/fondo_icono_add_multimedia"
+            android:layout_marginTop="56dp"
+            android:layout_marginLeft="4dp" />
 
     </LinearLayout>
 
@@ -42,42 +44,43 @@
             android:background="@drawable/butto_back"
             android:focusableInTouchMode="false" />
 
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/panel_new_evento"
+            android:layout_marginTop="205dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:id="@+id/">
+
+            <EditText
+
+                android:layout_width="300dp"
+                android:layout_height="55dp"
+                android:id="@+id/tituloEvento"
+                android:layout_gravity="center_horizontal"
+                android:text="Nombre del evento" />
+
+            <EditText
+                android:layout_width="300dp"
+                android:layout_height="55dp"
+                android:id="@+id/comentario_nuevo_evento"
+                android:layout_gravity="center_horizontal"
+                android:text="Comentario"
+                android:autoText="false" />
+
+            <EditText
+                android:layout_width="300dp"
+                android:layout_height="55dp"
+                android:id="@+id/cat_event_nuevo"
+                android:layout_gravity="center_horizontal"
+                android:text="Categoria" />
+
+        </LinearLayout>
+
     </LinearLayout>
 
-
-    <LinearLayout
-        android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="250dp"
-        android:layout_alignTop="@+id/panel_new_evento"
-        android:layout_marginTop="205dp"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true">
-
-        <EditText
-
-            android:layout_width="300dp"
-            android:layout_height="55dp"
-            android:id="@+id/tituloEvento"
-            android:layout_gravity="center_horizontal"
-            android:text="Nombre del evento" />
-
-        <EditText
-            android:layout_width="300dp"
-            android:layout_height="55dp"
-            android:id="@+id/comentario_nuevo_evento"
-            android:layout_gravity="center_horizontal"
-            android:text="Comentario"
-            android:autoText="false" />
-
-        <EditText
-            android:layout_width="300dp"
-            android:layout_height="55dp"
-            android:id="@+id/cat_event_nuevo"
-            android:layout_gravity="center_horizontal"
-            android:text="Categoria" />
-
-    </LinearLayout>
 
     <LinearLayout
         android:orientation="vertical"
@@ -94,6 +97,26 @@
             android:layout_height="70dp"
             android:id="@+id/agregarEvento"
             android:layout_gravity="center_horizontal" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="350dp"
+        android:layout_height="550dp"
+        android:layout_centerVertical="true"
+        android:id="@+id/panel_new_evento1"
+        android:focusableInTouchMode="false"
+        android:weightSum="1"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true">
+
+        <ImageButton
+            android:layout_width="250dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_height="250dp"
+            android:id="@+id/imageButton2"
+            android:background="@drawable/cuadro" />
+
     </LinearLayout>
 
 </RelativeLayout>
