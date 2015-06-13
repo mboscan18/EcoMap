@@ -1,74 +1,97 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent" android:layout_height="match_parent"
     android:orientation="vertical"
-    android:weightSum="1">
+    android:weightSum="1"
+    android:background="@drawable/fondo1">
 
-    <ImageButton
-        android:layout_width="276dp"
-        android:layout_height="150dp"
-        android:id="@+id/imageButton"
-        android:layout_gravity="center_horizontal"
-        android:background="@drawable/fondo_icono_add_multimedia"
-        android:baselineAlignBottom="false"
-        android:clickable="false"
-        android:longClickable="false"
-        android:layout_weight="0.24" />
 
-    <TextView android:id="@+id/lblnombre"
-        android:layout_width="218dp"
-        android:layout_height="wrap_content"
-        android:text="@string/agregarevento_nombre"
-        android:textIsSelectable="false"
-        android:textSize="23dp"
-        android:layout_gravity="left"
-        android:layout_weight="0.14" />
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="350dp"
+        android:layout_height="550dp"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/panel_new_evento"
+        android:focusableInTouchMode="false"
+        android:weightSum="1">
 
-    <EditText
+        <ImageButton
+            android:layout_width="200dp"
+            android:layout_gravity="center"
+            android:layout_height="200dp"
+            android:id="@+id/imageButton"
+            android:background="@drawable/fondo_icono_add_multimedia" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="350dp"
+        android:layout_height="550dp"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/panel_new_evento2"
+        android:focusableInTouchMode="false"
+        android:weightSum="1" >
+
+        <ImageButton
+            android:layout_width="50dp"
+            android:layout_height="55dp"
+            android:id="@+id/boton_atras"
+            android:background="@drawable/butto_back"
+            android:focusableInTouchMode="false" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/tituloEvento"
-        android:inputType="text"
-        android:linksClickable="false"
-        android:autoText="false" />
+        android:layout_height="250dp"
+        android:layout_alignTop="@+id/panel_new_evento"
+        android:layout_marginTop="205dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
 
-    <TextView android:id="@+id/lblcomentario"
-        android:layout_width="211dp"
-        android:layout_height="46dp"
-        android:text="@string/agregarevento_comentario"
-        android:textIsSelectable="false"
-        android:textSize="23dp"
-        android:layout_gravity="left" />
+        <EditText
+            android:layout_width="300dp"
+            android:layout_height="55dp"
+            android:id="@+id/tituloEvento"
+            android:layout_gravity="center_horizontal"
+            android:text="Nombre del evento" />
 
-    <EditText
-        android:layout_width="365dp"
-        android:layout_height="wrap_content"
-        android:id="@+id/comentario_nuevo_evento"
-        android:layout_gravity="right"
-        android:inputType="text"/>
+        <EditText
+            android:layout_width="300dp"
+            android:layout_height="55dp"
+            android:id="@+id/comentario_nuevo_evento"
+            android:layout_gravity="center_horizontal"
+            android:text="Comentario"
+            android:autoText="false" />
 
+        <EditText
+            android:layout_width="300dp"
+            android:layout_height="55dp"
+            android:id="@+id/cat_event_nuevo"
+            android:layout_gravity="center_horizontal"
+            android:text="Categoria" />
 
-    <TextView android:id="@+id/idcat"
-        android:layout_width="211dp"
-        android:layout_height="46dp"
-        android:text="@string/agregar_cat_new_evento"
-        android:textIsSelectable="false"
-        android:textSize="23dp"
-        android:layout_gravity="left" />
+    </LinearLayout>
 
-    <EditText
-        android:layout_width="365dp"
-        android:layout_height="wrap_content"
-        android:id="@+id/cat_event_nuevo"
-        android:layout_gravity="right"
-        android:inputType="text"/>
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="350dp"
+        android:layout_height="100dp"
+        android:layout_alignBottom="@+id/panel_new_evento"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true">
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/listo_evento"
-        android:id="@+id/agregarEvento"
-        android:layout_gravity="center_horizontal"
-        android:elegantTextHeight="true" />
+        <ImageButton
+            android:layout_width="350dp"
+            android:layout_height="70dp"
+            android:id="@+id/agregarEvento"
+            android:layout_gravity="center_horizontal" />
+    </LinearLayout>
 
-</LinearLayout>
+</RelativeLayout>
