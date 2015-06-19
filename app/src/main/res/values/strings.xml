@@ -5,4 +5,12 @@
     <string name="agregarevento_comentario">Comentario:</string>
     <string name="listo_evento">Listo</string>
     <string name="agregar_cat_new_evento">Categoria</string>
+    <string-array name="pruebaa_array">
+        <item>Aguas residuales</item>
+        <item>paisaje</item>
+        <item>Contaminacion</item>
+        <item>Laguna</item>
+
+    </string-array>
+
 </resources>

@@ -70,12 +70,11 @@
                 android:text="Comentario"
                 android:autoText="false" />
 
-            <EditText
+            <Spinner
                 android:layout_width="300dp"
                 android:layout_height="55dp"
                 android:id="@+id/cat_event_nuevo"
-                android:layout_gravity="center_horizontal"
-                android:text="Categoria" />
+                android:layout_gravity="center_horizontal" />
 
         </LinearLayout>
 

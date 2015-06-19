@@ -21,9 +21,11 @@ import android.text.format.Time;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 /**
@@ -35,6 +37,8 @@ public class AgregarEvento extends Activity implements OnClickListener{
     private Button  addEvento;
     private String latitud, longitud;
     private String archivo, fecha;
+    private Spinner cat_event_nuev;
+
 
     // Progress Dialog
     private ProgressDialog pDialog;
@@ -60,7 +64,6 @@ public class AgregarEvento extends Activity implements OnClickListener{
 
         tituloEvento = (EditText)findViewById(R.id.tituloEvento);
         comentario_nuevo_evento = (EditText)findViewById(R.id.comentario_nuevo_evento);
-        cat_event_nuevo = (EditText)findViewById(R.id.cat_event_nuevo);
 
         addEvento = (Button)findViewById(R.id.agregarEvento);
 
@@ -86,6 +89,16 @@ public class AgregarEvento extends Activity implements OnClickListener{
         hora.setToNow();
 
         addEvento.setOnClickListener(this);
+
+
+        cat_event_nuev = (Spinner) findViewById(R.id.cat_event_nuevo);
+// Create an ArrayAdapter using the string array and a default spinner layout
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
+                R.array.pruebaa_array, android.R.layout.simple_spinner_item);
+// Specify the layout to use when the list of choices appears
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+// Apply the adapter to the spinner
+        cat_event_nuev.setAdapter(adapter);
 
     }
 
