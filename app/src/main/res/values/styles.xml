@@ -5,4 +5,8 @@
         <!-- Customize your theme here. -->
     </style>
 
+    <style name="FondoTransparente" parent="@android:style/Theme.Dialog">
+        <item name="android:windowBackground">@color/md_transparent</item>
+    </style>
+
 </resources>

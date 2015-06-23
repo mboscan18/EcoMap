@@ -14,11 +14,18 @@ import android.widget.Toast;
 public class Toast_Personalizado extends Toast {
 
 
-    public Toast_Personalizado(Context contexto, String mensaje, int duration) {
+    public Toast_Personalizado(Context contexto, String mensaje, int duration, String tipo) {
         super(contexto);
         this.setDuration(duration);
         LayoutInflater inflater = (LayoutInflater) contexto.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View view = inflater.inflate(R.layout.toast_personalizado, (ViewGroup) ((Activity) contexto).findViewById(R.id.toast_personalizado));
+        View view = null;
+        if(tipo == "success"){
+            view = inflater.inflate(R.layout.toast_personalizado_green, (ViewGroup) ((Activity) contexto).findViewById(R.id.toast_personalizado_green));
+        }else
+        if(tipo == "error"){
+            view = inflater.inflate(R.layout.toast_personalizado_red, (ViewGroup) ((Activity) contexto).findViewById(R.id.toast_personalizado_red));
+        }
+
         this.setView(view);
         TextView tv = (TextView) view.findViewById(R.id.text_toast);
         tv.setText(mensaje);

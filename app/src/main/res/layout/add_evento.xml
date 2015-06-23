@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:weightSum="1"
+    android:background="@color/md_light_green_400">
+
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="260dp"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/panel_new_evento"
+        android:focusableInTouchMode="false"
+        android:weightSum="1"
+        android:layout_alignBottom="@+id/panel_new_evento1">
+<!--
+        <ImageButton
+            android:layout_width="50dp"
+            android:layout_height="55dp"
+            android:id="@+id/boton_atras"
+            android:background="@drawable/butto_back"
+            android:focusableInTouchMode="false" />
+
+        <ImageButton
+            android:layout_width="100dp"
+            android:layout_gravity="center"
+            android:layout_height="100dp"
+            android:id="@+id/imageButton"
+            android:background="@drawable/fondo_icono_add_multimedia"
+            android:layout_marginTop="56dp"
+            android:layout_marginLeft="4dp" />
+-->
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:id="@+id/layout1">
+
+            <ImageButton
+                android:layout_width="60dp"
+                android:layout_height="match_parent"
+                android:id="@+id/boton_atras"
+                android:background="@drawable/butto_back" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:weightSum="1">
+
+
+            <FrameLayout
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_gravity="center"
+                ></FrameLayout>
+
+        </LinearLayout>
+    </LinearLayout>
+    <!--
+       <LinearLayout
+           android:orientation="vertical"
+           android:layout_width="350dp"
+           android:layout_height="550dp"
+           android:layout_centerVertical="true"
+           android:layout_centerHorizontal="true"
+           android:id="@+id/panel_new_evento2"
+           android:focusableInTouchMode="false"
+           android:weightSum="1" >
+
+
+
+           <LinearLayout
+               android:orientation="vertical"
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:layout_alignTop="@+id/panel_new_evento"
+               android:layout_marginTop="205dp"
+               android:layout_alignParentLeft="true"
+               android:layout_alignParentStart="true"
+               android:id="@+id/lay">
+
+               <EditText
+
+                   android:layout_width="300dp"
+                   android:layout_height="55dp"
+                   android:id="@+id/tituloEvento"
+                   android:layout_gravity="center_horizontal"
+                   android:text="Nombre del evento" />
+
+               <EditText
+                   android:layout_width="300dp"
+                   android:layout_height="55dp"
+                   android:id="@+id/comentario_nuevo_evento"
+                   android:layout_gravity="center_horizontal"
+                   android:text="Comentario"
+                   android:autoText="false" />
+
+               <EditText
+                   android:layout_width="300dp"
+                   android:layout_height="55dp"
+                   android:id="@+id/cat_event_nuevo"
+                   android:layout_gravity="center_horizontal"
+                   android:text="Categoria" />
+
+           </LinearLayout>
+
+       </LinearLayout>
+
+
+           <LinearLayout
+               android:orientation="vertical"
+               android:layout_width="350dp"
+               android:layout_height="100dp"
+               android:layout_alignBottom="@+id/panel_new_evento"
+               android:layout_alignParentLeft="true"
+               android:layout_alignParentStart="true"
+               android:layout_alignParentRight="true"
+               android:layout_alignParentEnd="true">
+
+               <Button
+                   android:layout_width="350dp"
+                   android:layout_height="70dp"
+                   android:id="@+id/agregarEvento"
+                   android:layout_gravity="center_horizontal" />
+           </LinearLayout>
+
+           <LinearLayout
+               android:orientation="vertical"
+               android:layout_width="350dp"
+               android:layout_height="550dp"
+               android:layout_centerVertical="true"
+               android:id="@+id/panel_new_evento1"
+               android:focusableInTouchMode="false"
+               android:weightSum="1"
+               android:layout_alignParentRight="true"
+               android:layout_alignParentEnd="true">
+
+               <ImageButton
+                   android:layout_width="250dp"
+                   android:layout_gravity="center_horizontal"
+                   android:layout_height="250dp"
+                   android:id="@+id/imageButton2"
+                   android:background="@drawable/cuadro" />
+
+           </LinearLayout>
+       -->
+</LinearLayout>

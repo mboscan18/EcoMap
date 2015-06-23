@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:fitsSystemWindows="false"
+    android:orientation="vertical"
+    android:background="@color/md_transparent"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    tools:context=".Mapa"
+    android:id="@+id/layoutConfirmaExitTest"
+    android:weightSum="1">
+
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="140dp"
+        android:layout_gravity="center_horizontal"
+        android:paddingLeft="10dp"
+        android:background="@drawable/bordes_verdes"
+        android:weightSum="1">
+
+        <ImageView
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:id="@+id/imageView2"
+            android:layout_gravity="center_vertical" />
+
+        <FrameLayout
+            android:layout_width="12dp"
+            android:layout_height="match_parent"
+            android:background="@color/md_light_green_700"></FrameLayout>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Bote de Basura"
+                android:id="@+id/categoria_evento"
+                android:layout_gravity="center_horizontal"
+                android:layout_weight="0.4"
+                android:gravity="center_vertical|center_horizontal"
+                android:fontFamily="Verdana"
+                android:textColor="#ff689e38"
+                android:textIsSelectable="false"
+                android:textSize="18dp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Bote de basura cerca del conjunto residencial doña emilia"
+                android:id="@+id/titulo_Evento"
+                android:layout_gravity="center_horizontal"
+                android:layout_weight="0.6"
+                android:gravity="center_vertical|center_horizontal"
+                android:fontFamily="Verdana"
+                android:textColor="#000000"
+                android:textSize="15dp" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:text="VER EVENTO"
+        android:id="@+id/BotonVerEvento"
+        android:background="@drawable/boton_ver_evento"
+        android:fontFamily="Verdana"
+        android:textColor="#000000"
+        android:textSize="18dp" />
+</LinearLayout>

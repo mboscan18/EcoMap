@@ -73,10 +73,10 @@ public class AgregarEvento extends Activity implements OnClickListener{
         //Obtenemos la última posición conocida
         Location loc = locManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
 
-/*
-        latitud = String.valueOf(loc.getLatitude());
-        longitud = String.valueOf(loc.getLongitude());
-*/
+
+        /*latitud = String.valueOf(loc.getLatitude());
+        longitud = String.valueOf(loc.getLongitude());*/
+
 
         latitud = "8.282069";
         longitud = "-62.727008";
@@ -117,7 +117,8 @@ public class AgregarEvento extends Activity implements OnClickListener{
         protected void onPreExecute() {
             super.onPreExecute();
             pDialog = new ProgressDialog(AgregarEvento.this);
-            pDialog.setMessage("Creating User...");
+            pDialog.setMessage("Creando Evento...");
+
             pDialog.setIndeterminate(false);
             pDialog.setCancelable(true);
             pDialog.show();
@@ -160,7 +161,7 @@ public class AgregarEvento extends Activity implements OnClickListener{
                     message = json.getString(TAG_MESSAGE).toString();
                     AgregarEvento.this.runOnUiThread(new Runnable() {
                         public void run() {
-                            Toast_Personalizado toast = new Toast_Personalizado(AgregarEvento.this, message, Toast.LENGTH_LONG);
+                            Toast_Personalizado toast = new Toast_Personalizado(AgregarEvento.this, message, Toast.LENGTH_LONG, "success");
                             toast.show();
                         }
                     });
@@ -170,7 +171,7 @@ public class AgregarEvento extends Activity implements OnClickListener{
                     message = json.getString(TAG_MESSAGE);
                     AgregarEvento.this.runOnUiThread(new Runnable() {
                         public void run() {
-                            Toast_Personalizado toast = new Toast_Personalizado(AgregarEvento.this, message, Toast.LENGTH_LONG);
+                            Toast_Personalizado toast = new Toast_Personalizado(AgregarEvento.this, message, Toast.LENGTH_LONG, "error");
                             toast.show();
                         }
                     });
