@@ -17,7 +17,7 @@
         android:layout_height="140dp"
         android:layout_gravity="center_horizontal"
         android:paddingLeft="10dp"
-        android:background="@drawable/bordes_verdes"
+        android:background="@drawable/bordes_green"
         android:weightSum="1">
 
         <ImageView
@@ -44,7 +44,7 @@
                 android:layout_gravity="center_horizontal"
                 android:layout_weight="0.4"
                 android:gravity="center_vertical|center_horizontal"
-                android:fontFamily="Verdana"
+                android:fontFamily="Tahoma"
                 android:textColor="#ff689e38"
                 android:textIsSelectable="false"
                 android:textSize="18dp"

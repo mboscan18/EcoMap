@@ -45,6 +45,8 @@ public class Mapa extends FragmentActivity implements GoogleMap.OnMyLocationChan
             @Override
             public void onClick(View v) {
                 mMap.setOnMapClickListener(Mapa.this);
+
+                mMap.setOnMyLocationChangeListener(Mapa.this);
                 circle.setStrokeColor(getResources().getColor(R.color.md_light_green_700));
                 Toast_Personalizado toast = new Toast_Personalizado(Mapa.this, "Toca la posición en el mapa donde deseas agregar el evento!", Toast.LENGTH_LONG, "success");
                 toast.setGravity(Gravity.CENTER_VERTICAL,0,0);
