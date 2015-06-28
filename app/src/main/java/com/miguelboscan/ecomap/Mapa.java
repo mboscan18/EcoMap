@@ -102,7 +102,7 @@ public class Mapa extends FragmentActivity implements GoogleMap.OnMyLocationChan
         mMap.setOnMyLocationChangeListener(this);
         mMap.setOnMarkerClickListener(this);
 
-        UPV = new LatLng(8.282069, -62.727008);
+        UPV = new LatLng(8.282535, -62.727626);
         UPV2 = new LatLng(8.282625, -62.725234);
         //mMap.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
         mMap.getUiSettings().setZoomControlsEnabled(false);
@@ -110,20 +110,22 @@ public class Mapa extends FragmentActivity implements GoogleMap.OnMyLocationChan
         MarkerOptions m1 = new MarkerOptions()
                 .position(UPV)
                 .title("Bote de Basura")
-                .snippet("Acumulacion de basura en Conjunto residencil Doña Emilia")
-                .icon(BitmapDescriptorFactory.fromResource(R.drawable.bolsa))
+
+                .icon(BitmapDescriptorFactory.fromResource(R.drawable.symbol_basura))
                 .anchor(0.5f, 0.5f);
+
 
         MarkerOptions m2 = new MarkerOptions()
                 .position(UPV2)
                 .title("Bote de Agua")
                 .snippet("Derrame de agua cerca de Los Mangos")
-                .icon(BitmapDescriptorFactory.fromResource(R.drawable.grifo))
+                .icon(BitmapDescriptorFactory.fromResource(R.drawable.symbol_bote_agua))
                 .anchor(0.5f, 0.5f);
         Marker mar1, mar2;
 
         mar1 = mMap.addMarker(m1);
         mar2 = mMap.addMarker(m2);
+        m1.snippet("Acumulacion de basura en Conjunto residencil Doña Emilia");
     }
 
     /**
@@ -134,7 +136,7 @@ public class Mapa extends FragmentActivity implements GoogleMap.OnMyLocationChan
     public void onMyLocationChange(Location location) {
         CameraUpdate myLoc = CameraUpdateFactory.newCameraPosition(
                 new CameraPosition.Builder().target(new LatLng(location.getLatitude(),
-                        location.getLongitude())).zoom(17).build());
+                        location.getLongitude())).zoom(16).build());
         mMap.moveCamera(myLoc);
         mMap.setOnMyLocationChangeListener(null);
         circle = mMap.addCircle(new CircleOptions()
