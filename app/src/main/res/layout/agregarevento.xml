@@ -92,7 +92,7 @@
         android:layout_alignParentEnd="true">
 
         <Button
-            android:layout_width="350dp"
+            android:layout_width="138dp"
             android:layout_height="70dp"
             android:id="@+id/agregarEvento"
             android:layout_gravity="center_horizontal" />

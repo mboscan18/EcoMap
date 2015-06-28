@@ -60,7 +60,7 @@ public class AgregarEvento extends Activity implements OnClickListener{
     protected void onCreate(Bundle savedInstanceState) {
         // TODO Auto-generated method stub
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.agregarevento);
+        setContentView(R.layout.add_evento);
 
         tituloEvento = (EditText)findViewById(R.id.tituloEvento);
         comentario_nuevo_evento = (EditText)findViewById(R.id.comentario_nuevo_evento);

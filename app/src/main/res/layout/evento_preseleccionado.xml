@@ -17,7 +17,7 @@
         android:layout_height="140dp"
         android:layout_gravity="center_horizontal"
         android:paddingLeft="10dp"
-        android:background="@drawable/bordes_green"
+        android:background="@drawable/bordes_prueba"
         android:weightSum="1">
 
         <ImageView
@@ -27,7 +27,7 @@
             android:layout_gravity="center_vertical" />
 
         <FrameLayout
-            android:layout_width="12dp"
+            android:layout_width="3dp"
             android:layout_height="match_parent"
             android:background="@color/md_light_green_700"></FrameLayout>
 
@@ -44,7 +44,7 @@
                 android:layout_gravity="center_horizontal"
                 android:layout_weight="0.4"
                 android:gravity="center_vertical|center_horizontal"
-                android:fontFamily="Tahoma"
+                android:fontFamily="Calibri"
                 android:textColor="#ff689e38"
                 android:textIsSelectable="false"
                 android:textSize="18dp"
