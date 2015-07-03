@@ -12,6 +12,13 @@
         android:layout_gravity="center_horizontal">
 
 
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/imageButton3"
+            android:background="@drawable/fondo_icono_add_archivo"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true" />
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
@@ -26,17 +33,27 @@
                 android:layout_width="249dp"
                 android:layout_height="55dp"
                 android:id="@+id/tituloEvento"
-                android:layout_gravity="center_horizontal"
-                android:text="Nombre del evento"
+                android:inputType="textPersonName"
+                android:gravity="center_horizontal"
+                android:ems="9"
+                android:layout_gravity="center"
+                android:hint="Nombre del evento"
+                android:textColorHint="@color/md_disabled_hint_text"
                 android:layout_below="@+id/imageButton3"
                 android:layout_centerHorizontal="true"
+                android:elegantTextHeight="false"
+                android:singleLine="false"
                 android:layout_marginTop="37dp" />
             <EditText
                 android:layout_width="248dp"
-                android:layout_height="77dp"
+                android:layout_height="55dp"
                 android:id="@+id/comentario_nuevo_evento"
-                android:layout_gravity="center_horizontal"
-                android:text="Comentario"
+                android:inputType="textPersonName"
+                android:gravity="center_horizontal"
+                android:ems="9"
+                android:layout_gravity="center"
+                android:hint="Comentario"
+                android:textColorHint="@color/md_disabled_hint_text"
                 android:autoText="false" />
 
             <Spinner

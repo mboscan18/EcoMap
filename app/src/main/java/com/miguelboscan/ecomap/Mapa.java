@@ -1,7 +1,9 @@
 package com.miguelboscan.ecomap;
 
 import android.app.DialogFragment;
+import android.app.ProgressDialog;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import com.google.android.gms.maps.CameraUpdate;
@@ -23,8 +25,18 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.ListAdapter;
+import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 public class Mapa extends FragmentActivity implements GoogleMap.OnMyLocationChangeListener, GoogleMap.OnMarkerClickListener, GoogleMap.OnMapClickListener {
 
@@ -33,6 +45,21 @@ public class Mapa extends FragmentActivity implements GoogleMap.OnMyLocationChan
     private ImageButton addEvento;
     private Circle circle;
     private String TituloEvento, CategoriaEvento;
+    private static String url_eventos = "http://eco-map.esy.es/BD_Function/getEventos.php";
+    private static final String TAG_SUCCESS = "success";
+    private static final String TAG_PRODUCTS = "evento";
+    JSONParser jParser = new JSONParser();
+    // products JSONArray
+    JSONArray products = null;
+
+    private static final String TAG_ID = "id_eventos";
+    private static final String TAG_TITULO = "titulo";
+    private static final String TAG_LAT = "latitud";
+    private static final String TAG_LON = "longitud";
+    private static final String TAG_CATEGORIA = "categoria_id_categoria";
+    private static final String TAG_COMENTARIO = "comentario";
+
+    private ProgressDialog pDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -226,6 +253,108 @@ public class Mapa extends FragmentActivity implements GoogleMap.OnMyLocationChan
 
             getDialog().setCanceledOnTouchOutside(true);
             return view;
+        }
+    }
+
+
+    class getEventos extends AsyncTask<String, String, String> {
+
+        /**
+         * Antes de empezar el background thread Show Progress Dialog
+         * */
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            pDialog = new ProgressDialog(Mapa.this);
+            pDialog.setMessage("Cargando Eventos");
+            pDialog.setIndeterminate(false);
+            pDialog.setCancelable(false);
+            pDialog.show();
+        }
+
+        /**
+         * obteniendo todos los productos
+         * */
+        protected String doInBackground(String... args) {
+            // Building Parameters
+            List params = new ArrayList();
+            // getting JSON string from URL
+            JSONObject json = jParser.makeHttpRequest(url_eventos, "GET", params);
+
+            // Check your log cat for JSON reponse
+            System.out.print("All Products: " + json.toString());
+
+            try {
+                // Checking for SUCCESS TAG
+                int success = json.getInt(TAG_SUCCESS);
+
+                if (success == 1) {
+                    // products found
+                    // Getting Array of Products
+                    products = json.getJSONArray(TAG_PRODUCTS);
+
+                    // looping through All Products
+                    //Log.i("ramiro", "produtos.length" + products.length());
+                    for (int i = 0; i < products.length(); i++) {
+                        JSONObject c = products.getJSONObject(i);
+
+                        // Storing each json item in variable
+                        String id = c.getString(TAG_ID);
+                        String lat = c.getString(TAG_LAT);
+                        String lon = c.getString(TAG_LON);
+
+                        String titulo = c.getString(TAG_TITULO);
+                        String categoria = c.getString(TAG_CATEGORIA);
+                        String comentario = c.getString(TAG_COMENTARIO);
+
+                        // creating new HashMap
+                        HashMap map = new HashMap();
+
+                        // adding each child node to HashMap key => value
+                        map.put(TAG_ID, id);
+                        map.put(TAG_LAT, lat);
+                        map.put(TAG_LON, lon);
+                        map.put(TAG_TITULO, titulo);
+                        map.put(TAG_CATEGORIA, categoria);
+                        map.put(TAG_COMENTARIO, comentario);
+
+                    }
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        /**
+         * After completing background task Dismiss the progress dialog
+         * **/
+        protected void onPostExecute(String file_url) {
+            // dismiss the dialog after getting all products
+            pDialog.dismiss();
+            // updating UI from Background Thread
+            runOnUiThread(new Runnable() {
+                public void run() {
+                    /**
+                     * Updating parsed JSON data into ListView
+                     * */
+                    ListAdapter adapter = new SimpleAdapter(
+                            MainActivity.this,
+                            empresaList,
+                            R.layout.single_post,
+                            new String[] {
+                                    TAG_ID,
+                                    TAG_NOMBRE,
+                            },
+                            new int[] {
+                                    R.id.single_post_tv_id,
+                                    R.id.single_post_tv_nombre,
+                            });
+                    // updating listview
+                    //setListAdapter(adapter);
+                    lista.setAdapter(adapter);
+                }
+            });
         }
     }
 }

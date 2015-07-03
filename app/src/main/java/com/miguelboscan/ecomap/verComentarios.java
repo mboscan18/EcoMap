@@ -51,7 +51,7 @@ ArrayList<HashMap<String, String>> empresaList;
 
 
 // url to get all products list
-private static String url_all_empresas = "http://eco-map.esy.es/BD_Function/get_all_empresas.php";
+private static String url_all_empresas = "http://eco-map.esy.es/BD_Function/getComments.php";
     private static String REGISTER_URL = "http://eco-map.esy.es/BD_Function/addComments.php";
 
 // JSON Node names
@@ -152,7 +152,7 @@ ListView lista;
        JSONObject json = jParser.makeHttpRequest(url_all_empresas, "GET", params);
 
         // Check your log cat for JSON reponse
-        System.out.print("All Products: " + json.toString());
+//        System.out.print("All Products: " + json.toString());
         Log.d("All productos", json.toString());
 
 
