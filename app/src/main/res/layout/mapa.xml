@@ -40,6 +40,8 @@
             android:layout_height="80dp"
             android:id="@+id/imageView"
             android:background="@drawable/ecomaps"
+            android:maxWidth="100px"
+            android:maxHeight="140px"
             android:layout_gravity="left|center_vertical" />
     </FrameLayout>
 

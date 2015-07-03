@@ -10,7 +10,6 @@
     android:id="@+id/layoutConfirmaExitTest"
     android:weightSum="1">
 
-
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"

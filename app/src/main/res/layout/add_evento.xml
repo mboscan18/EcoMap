@@ -6,24 +6,12 @@
     android:background="@drawable/bordes_prueba"
      >
 
-    <ImageButton
-        android:layout_width="65dp"
-        android:layout_height="65dp"
-        android:id="@+id/boton_atras" />
-
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="center_horizontal">
 
 
-        <ImageButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/imageButton3"
-            android:background="@drawable/document"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true" />
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
@@ -65,9 +53,16 @@
             android:layout_height="100dp"
             android:layout_above="@+id/lay"
             android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_marginBottom="65dp">
+            android:layout_alignParentStart="true">
 
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/imageButton3"
+                android:background="@drawable/document"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:layout_gravity="center_horizontal" />
         </LinearLayout>
 
         <Button
@@ -76,17 +71,18 @@
             android:layout_height="wrap_content"
             android:text="Agregar evento"
             android:id="@+id/agregarEvento"
-            android:layout_marginTop="30dp"
-            android:layout_below="@+id/lay"
             android:textStyle="bold"
             android:background="#81c784"
             android:textColor="#fffde7"
-            android:layout_alignRight="@+id/imageButton3"
-            android:layout_alignEnd="@+id/imageButton3"
-            android:layout_alignLeft="@+id/imageButton3"
-            android:layout_alignStart="@+id/imageButton3" />
+            android:layout_below="@+id/lay"
+            android:layout_centerHorizontal="true" />
 
 
     </RelativeLayout>
+
+    <GridLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="right"></GridLayout>
 
 </LinearLayout>
