@@ -143,12 +143,7 @@ public class AgregarEvento extends Activity implements OnClickListener, AdapterV
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
        idd= parent.getSelectedItemPosition();
-        pDialog2 = new ProgressDialog(AgregarEvento.this);
-        pDialog2.setMessage("Creando Evento..."+ idd);
 
-        pDialog2.setIndeterminate(false);
-        pDialog2.setCancelable(true);
-        pDialog2.show();
 
     }
 
