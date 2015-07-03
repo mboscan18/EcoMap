@@ -5,11 +5,40 @@
     <string name="agregarevento_comentario">Comentario:</string>
     <string name="listo_evento">Listo</string>
     <string name="agregar_cat_new_evento">Categoria</string>
+    <string name="hello">CustomSpinner Demo from CoderzHeaven!</string>
+    <string name="prompt">  Select your Favourite  </string>
+    <drawable name="white">#ffffff</drawable>
+    <drawable name="black">#000000</drawable>
+    <drawable name="green">#347C2C</drawable>
+    <drawable name="pink">#FF00FF</drawable>
+    <drawable name="violet">#a020f0</drawable>
+    <drawable name="grey">#778899</drawable>
+    <drawable name="red">#C11B17</drawable>
+    <drawable name="yellow">#FFFF8C</drawable>
+    <drawable name="PowderBlue">#b0e0e6</drawable>
+    <drawable name="brown">#2F1700</drawable>
+    <drawable name="Hotpink">#7D2252</drawable>
+    <string name="select_Category">Select Category</string>
+    <drawable name="darkgrey">#606060</drawable>
+
     <string-array name="pruebaa_array">
         <item>Aguas residuales</item>
-        <item>paisaje</item>
-        <item>Contaminacion</item>
-        <item>Laguna</item>
+        <item>Basura</item>
+        <item>Bote de agua</item>
+        <item>Contaminacion Industrial</item>
+        <item>Contaminacion Sonica</item>
+        <item>Charlas</item>
+        <item>Deforestacion</item>
+        <item>Derrumbe</item>
+        <item>Desarrollo Hurbano</item>
+        <item>Desechos</item>
+        <item>Incendio</item>
+        <item>Inundacion</item>
+        <item>Paisaje</item>
+        <item>Playa</item>
+        <item>Rio</item>
+        <item>Zona Para acampar</item>
+
 
     </string-array>
 
