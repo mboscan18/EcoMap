@@ -4,6 +4,7 @@
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:padding="3dip"
+    android:background="@color/md_green_50"
     >
     <ImageView
         android:id="@+id/image"
@@ -14,7 +15,7 @@
         android:layout_toRightOf="@+id/image"
         android:padding="3dip"
         android:layout_marginTop="2dip"
-        android:textColor="@drawable/red"
+        android:textColor="@color/md_light_green_900"
         android:textStyle="bold"
         android:id="@+id/company"
         android:text="CoderzHeaven"

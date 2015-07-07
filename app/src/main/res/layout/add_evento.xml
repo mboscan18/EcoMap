@@ -18,7 +18,8 @@
             android:id="@+id/imageButton3"
             android:background="@drawable/fondo_icono_add_archivo"
             android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true" />
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="30dp" />
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
@@ -64,35 +65,18 @@
 
         </LinearLayout>
 
-        <LinearLayout
-            android:orientation="vertical"
-            android:layout_width="350dp"
-            android:layout_height="100dp"
-            android:layout_above="@+id/lay"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true">
-
-            <ImageButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/imageButton3"
-                android:background="@drawable/document"
-                android:layout_alignParentTop="true"
-                android:layout_centerHorizontal="true"
-                android:layout_gravity="center_horizontal" />
-        </LinearLayout>
-
         <Button
             style="?android:attr/buttonStyleSmall"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="200dp"
+            android:layout_height="50dp"
             android:text="Agregar evento"
             android:id="@+id/agregarEvento"
             android:textStyle="bold"
             android:background="#81c784"
             android:textColor="#fffde7"
             android:layout_below="@+id/lay"
-            android:layout_centerHorizontal="true" />
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="20dp" />
 
 
     </RelativeLayout>

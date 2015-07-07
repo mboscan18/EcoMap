@@ -42,8 +42,8 @@ import static com.miguelboscan.ecomap.R.*;
 public class AgregarEvento extends Activity implements OnClickListener, AdapterView.OnItemSelectedListener {
     private EditText tituloEvento, comentario_nuevo_evento, cat_event_nuevo;
     private Button  addEvento;
-    private String latitud, longitud;
-    private String archivo, fecha;
+    private Double latitud, longitud;
+    private String archivo, fecha, hora, latitud1, longitud1;
     private Spinner cat_event_nuev;
 
 
@@ -57,16 +57,16 @@ public class AgregarEvento extends Activity implements OnClickListener, AdapterV
 
     //si lo trabajan de manera local en xxx.xxx.x.x va su ip local
     // private static final String REGISTER_URL = "http://xxx.xxx.x.x:1234/cas/register.php";
-    String[] strings = {"Aguas residuales","Basura","Bote de agua","Contaminacion Industrial","Contaminacion Sonica","Charlas","Deforestacion","Derrumbe","Desarrollo Hurbano","Desechos","Incendio","Inundacion","Paisaje","Playa","Rio","Zona Para acampar"};
+    String[] strings = {"Bote de Agua","Aguas residuales","Basura Acumulada", "Charlas Ambientalistas","Contaminacion Industrial","Contaminacion Sonica","Deforestacion","Zona para Acampar","Derrumbe","Desarrollo Urbano","Desechos Toxicos","Incendio","Inundacion","Paisaje Natural","Playa","Rio o Lago"};
 
 
-    String[] subs = {"Aguas residuales","Basura","Bote de agua","Contaminacion Industrial","Contaminacion Sonica","Charlas","Deforestacion","Derrumbe","Desarrollo Hurbano","Desechos","Incendio","Inundacion","Paisaje","Playa","Rio","Zona Para acampar"};
+    String[] subs = {"Derrame de Agua/Tubo Roto","Aguas Contaminadas/Cloacas","Basura en la calle/Acumalcion de Basura", "Foros/Conferencias/Charlas","Contaminacion por Emmpresas","Contaminacion Sonica","Tala de Arboles/Daño a las Plantas","Zona para Acampar","Derrumbe","Desarrollo Urbano","Desechos Toxicos","Incendio","Inundacion","Paisaje Natural","Balneario Turistico","Rio o Lago"};
 
-    int arr_images[] = { drawable.symbol_aguas_residuales,
-            drawable.symbol_basura, drawable.symbol_bote_agua,
-            drawable.symbol_charlas, drawable.symbol_contaminacion_industrial, drawable.symbol_contaminacion_sonica,drawable.symbol_deforestacion,
-            drawable.symbol_derrumbe, drawable.symbol_desarrollo_urbano, drawable.symbol_desechos, drawable.symbol_incendio,drawable.symbol_inundacion,
-            drawable.symbol_paisaje, drawable.symbol_playa,drawable.symbol_rio, drawable.symbol_zona_acampar};
+    int arr_images[] = { drawable.symbol_bote_agua, drawable.symbol_aguas_residuales,
+            drawable.symbol_basura, drawable.symbol_charlas, drawable.symbol_contaminacion_industrial,
+            drawable.symbol_contaminacion_sonica, drawable.symbol_deforestacion, drawable.symbol_zona_acampar,
+            drawable.symbol_derrumbe, drawable.symbol_desarrollo_urbano, drawable.symbol_desechos, drawable.symbol_incendio,
+            drawable.symbol_inundacion, drawable.symbol_paisaje, drawable.symbol_playa,drawable.symbol_rio};
 
     //testing on Emulator:
     private static final String REGISTER_URL = "http://eco-map.esy.es/BD_Function/agregarEvento.php";
@@ -95,17 +95,17 @@ public class AgregarEvento extends Activity implements OnClickListener, AdapterV
 
         /*latitud = String.valueOf(loc.getLatitude());
         longitud = String.valueOf(loc.getLongitude());*/
+        latitud = (Double)getIntent().getExtras().getSerializable("Latitud");
+        longitud = (Double)getIntent().getExtras().getSerializable("Longitud");
 
-
-        latitud = "8.282069";
-        longitud = "-62.727008";
         // Para obtener la fecha y hora actual
         Calendar c = Calendar.getInstance();
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat sdfH = new SimpleDateFormat("HH:mm:ss");
         fecha = sdf.format(c.getTime());
+        hora = sdfH.format(c.getTime());
 
-        Time hora = new Time();
-        hora.setToNow();
+
 
         addEvento.setOnClickListener(this);
 
@@ -130,19 +130,13 @@ public class AgregarEvento extends Activity implements OnClickListener, AdapterV
     public void onClick(View v) {
         // TODO Auto-generated method stub
 
-
-
-
-
-
-
         new CreateUser().execute();
 
     }
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-       idd= parent.getSelectedItemPosition();
+       idd= parent.getSelectedItemPosition()+1;
 
 
     }
@@ -195,7 +189,7 @@ public class AgregarEvento extends Activity implements OnClickListener, AdapterV
 
 
     class CreateUser extends AsyncTask<String, String, String> {
-
+        int sw = 0;
 
         @Override
         protected void onPreExecute() {
@@ -223,10 +217,10 @@ public class AgregarEvento extends Activity implements OnClickListener, AdapterV
                 params.add(new BasicNameValuePair("titulo", titulo));
                 params.add(new BasicNameValuePair("comentario", comentario));
                 params.add(new BasicNameValuePair("categoria",categoria));
-                params.add(new BasicNameValuePair("latitud", latitud));
-                params.add(new BasicNameValuePair("longitud", longitud));
+                params.add(new BasicNameValuePair("latitud", String.format("%.6f",latitud)+""));
+                params.add(new BasicNameValuePair("longitud", String.format("%.6f",longitud)+""));
                 params.add(new BasicNameValuePair("fecha", fecha));
-                params.add(new BasicNameValuePair("hora", "10:25"));
+                params.add(new BasicNameValuePair("hora", hora));
                 params.add(new BasicNameValuePair("archivo", "La direccion"));
 
                 Log.d("request!", "starting");
@@ -249,6 +243,7 @@ public class AgregarEvento extends Activity implements OnClickListener, AdapterV
                             toast.show();
                         }
                     });
+                    sw = 1;
 
                 }else{
                     Log.d("Registering Failure!", json.getString(TAG_MESSAGE));
@@ -259,6 +254,7 @@ public class AgregarEvento extends Activity implements OnClickListener, AdapterV
                             toast.show();
                         }
                     });
+                    sw = -1;
 
                 }
             } catch (JSONException e) {
@@ -272,6 +268,9 @@ public class AgregarEvento extends Activity implements OnClickListener, AdapterV
         protected void onPostExecute(String file_url) {
             // dismiss the dialog once product deleted
             pDialog.dismiss();
+            if (sw == 1){
+                AgregarEvento.this.finish();
+            }
             if (file_url != null){
                 Toast.makeText(AgregarEvento.this, file_url, Toast.LENGTH_LONG).show();
             }
