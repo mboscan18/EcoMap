@@ -15,7 +15,7 @@
         <ImageButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/imageButton3"
+            android:id="@+id/SubirArchivo"
             android:background="@drawable/fondo_icono_add_archivo"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
