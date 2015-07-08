@@ -270,6 +270,8 @@ public class AgregarEvento extends Activity implements OnClickListener, AdapterV
             // dismiss the dialog once product deleted
             pDialog.dismiss();
             if (sw == 1){
+                Intent returnIntent = new Intent();
+                setResult(RESULT_OK,returnIntent);
                 AgregarEvento.this.finish();
             }
             if (file_url != null){

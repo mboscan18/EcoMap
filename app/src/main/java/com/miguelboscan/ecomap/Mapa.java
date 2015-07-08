@@ -3,7 +3,6 @@ package com.miguelboscan.ecomap;
 import android.app.DialogFragment;
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.content.res.Resources;
 import android.os.AsyncTask;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
@@ -27,33 +26,34 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.ListAdapter;
-import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
-public class Mapa extends FragmentActivity implements GoogleMap.OnMyLocationChangeListener, GoogleMap.OnMarkerClickListener, GoogleMap.OnMapClickListener {
+/**
+ * Created by Miguel on 05/06/2015.
+ */
+
+public class Mapa extends FragmentActivity implements GoogleMap.OnMyLocationChangeListener, GoogleMap.OnMarkerClickListener,  GoogleMap.OnMapClickListener {
 
     private GoogleMap mMap; // Might be null if Google Play services APK is not available.
-    private LatLng UPV, UPV2;
+    private LatLng UPV;
     private ImageButton addEvento;
     private Circle circle;
     private String TituloEvento, CategoriaEvento;
     private static String url_eventos = "http://eco-map.esy.es/BD_Function/getEventos.php";
-    private static final String TAG_SUCCESS = "success";
-    JSONParser jParser = new JSONParser();
-    // products JSONArray
-    JSONArray eventos = null;
-    JSONArray comentarios = null;
 
+    JSONParser jParser = new JSONParser();      // Convierte los datos recibidos en formato JSON
+    JSONArray eventos = null;                   // Guarda el JSON de los eventos extraidos
+    JSONArray comentarios = null;               // Guarda el JSON de los comentarios extraidos
+
+    private static final String TAG_SUCCESS = "success";                    // Es una bandera que representa si la extraccion
 
     private static final String TAG_OBJETO_EVENTOS = "eventos";
     private static final String TAG_ID = "id";
@@ -69,9 +69,10 @@ public class Mapa extends FragmentActivity implements GoogleMap.OnMyLocationChan
     private static final String TAG_ID_EVENTO_COMEN = "id_eventos";
     private static final String TAG_ARCHIVO = "archivo";
 
-
+    static final int PICK_CONTACT_REQUEST = 1;  // The request code
     private ProgressDialog pDialog;
     private MarkerOptions[] optionMarker;
+    private Double latitudCentro, longitudCentro;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,8 +84,8 @@ public class Mapa extends FragmentActivity implements GoogleMap.OnMyLocationChan
         addEvento.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                circle.setStrokeColor(getResources().getColor(R.color.md_transparent));
                 mMap.setOnMapClickListener(Mapa.this);
-
                 mMap.setOnMyLocationChangeListener(Mapa.this);
                 circle.setStrokeColor(getResources().getColor(R.color.md_light_green_700));
                 Toast_Personalizado toast = new Toast_Personalizado(Mapa.this, "Toca la posición en el mapa donde deseas agregar el evento!", Toast.LENGTH_LONG, "success");
@@ -92,6 +93,24 @@ public class Mapa extends FragmentActivity implements GoogleMap.OnMyLocationChan
                 toast.show();
             }
         });
+    }
+
+    /**
+     *
+     * @param requestCode Codigo por medio del cual se van a recibir los datos de la actividad Hijo
+     * @param resultCode Codigo que
+     * @param data
+     */
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        // Check which request we're responding to
+        if (requestCode == PICK_CONTACT_REQUEST) {
+            // Make sure the request was successful
+            if (resultCode == RESULT_OK) {
+                mMap.setOnMyLocationChangeListener(Mapa.this);
+                circle.setStrokeColor(getResources().getColor(R.color.md_transparent));
+            }
+        }
     }
 
     @Override
@@ -135,45 +154,18 @@ public class Mapa extends FragmentActivity implements GoogleMap.OnMyLocationChan
      * This should only be called once and when we are sure that {@link #mMap} is not null.
      */
     private void setUpMap() {
-      //  mMap.setMyLocationEnabled(true);
-
         mMap.setMyLocationEnabled(true);
         mMap.setOnMyLocationChangeListener(this);
         mMap.setOnMarkerClickListener(this);
 
-        UPV = new LatLng(8.282535, -62.727626);
-        UPV2 = new LatLng(8.282625, -62.725234);
         //mMap.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
         mMap.getUiSettings().setZoomControlsEnabled(false);
         mMap.getUiSettings().setCompassEnabled(true);
-        MarkerOptions m1 = new MarkerOptions()
-                .position(UPV)
-                .title("Bote de Basura")
-
-                .icon(BitmapDescriptorFactory.fromResource(R.drawable.symbol_basura))
-                .anchor(0.5f, 0.5f);
-
-
-        MarkerOptions m2 = new MarkerOptions()
-                .position(UPV2)
-                .title("Bote de Agua")
-                .snippet("Derrame de agua cerca de Los Mangos")
-                .icon(BitmapDescriptorFactory.fromResource(R.drawable.symbol_bote_agua))
-                .anchor(0.5f, 0.5f);
-        Marker mar1, mar2;
-
-        //mar1 = mMap.addMarker(m1);
-        //mar2 = mMap.addMarker(m2);
-        m1.snippet("Acumulacion de basura en Conjunto residencil Doña Emilia");
     }
 
     public void AddMarker(MarkerOptions mar){
         Log.d("Titulo Marker",mar.getTitle());
         mMap.addMarker(mar);
-    }
-
-    public void AJA(MarkerOptions mar){
-        AddMarker(mar);
     }
 
     /**
@@ -187,6 +179,8 @@ public class Mapa extends FragmentActivity implements GoogleMap.OnMyLocationChan
                         location.getLongitude())).zoom(16).build());
         mMap.moveCamera(myLoc);
         mMap.setOnMyLocationChangeListener(null);
+        latitudCentro = location.getLatitude();
+        longitudCentro = location.getLongitude();
         circle = mMap.addCircle(new CircleOptions()
                 .center(new LatLng(location.getLatitude(), location.getLongitude()))
                 .radius(300)
@@ -236,7 +230,7 @@ public class Mapa extends FragmentActivity implements GoogleMap.OnMyLocationChan
             Intent intent = new Intent(Mapa.this, AgregarEvento.class);
             intent.putExtra("Latitud", latitudSeleccionada);
             intent.putExtra("Longitud", longitudSeleccionada);
-            startActivity(intent);
+            startActivityForResult(intent,1);
         }else{
             Toast_Personalizado toast = new Toast_Personalizado(Mapa.this, "No puedes agregar un evento fuera del área permitida!!", Toast.LENGTH_LONG, "error");
             toast.setGravity(Gravity.CENTER_VERTICAL, 0, 0);
@@ -278,6 +272,7 @@ public class Mapa extends FragmentActivity implements GoogleMap.OnMyLocationChan
     }
 
 
+
     class getEventos extends AsyncTask<String, String, String> {
 
 
@@ -300,8 +295,10 @@ public class Mapa extends FragmentActivity implements GoogleMap.OnMyLocationChan
         protected String doInBackground(String... args) {
             // Building Parameters
             List params = new ArrayList();
+            params.add(new BasicNameValuePair("latitud", String.format("%.6f",latitudCentro)+""));
+            params.add(new BasicNameValuePair("longitud", String.format("%.6f",longitudCentro)+""));
             // getting JSON string from URL
-            JSONObject json = jParser.makeHttpRequest(url_eventos, "GET", params);
+            JSONObject json = jParser.makeHttpRequest(url_eventos, "POST", params);
 
 
             // Check your log cat for JSON reponse
@@ -331,13 +328,66 @@ public class Mapa extends FragmentActivity implements GoogleMap.OnMyLocationChan
                         Double lat = Double.parseDouble(ev.getString(TAG_LAT));
                         Double lon = Double.parseDouble(ev.getString(TAG_LON));
                         String titulo = ev.getString(TAG_TITULO);
-                        String categoria = ev.getString(TAG_CATEGORIA);
+                        int categoria = ev.getInt(TAG_CATEGORIA);
                         String categoria_tit = ev.getString(TAG_CATEGORIA_TIT);
                         String comentario = cm.getString(TAG_COMENTARIO);
 
                         UPV = new LatLng(lat, lon);
 
-                        int icono = R.drawable.symbol_aguas_residuales;
+                        int icono=0;
+                        switch (categoria) {
+                            case 1:
+                                icono = R.drawable.symbol_bote_agua;
+                                break;
+                            case 2:
+                                icono = R.drawable.symbol_aguas_residuales;
+                                break;
+                            case 3:
+                                icono = R.drawable.symbol_basura;
+                                break;
+                            case 4:
+                                icono = R.drawable.symbol_charlas;
+                                break;
+                            case 5:
+                                icono = R.drawable.symbol_contaminacion_industrial;
+                                break;
+                            case 6:
+                                icono = R.drawable.symbol_contaminacion_sonica;
+                                break;
+                            case 7:
+                                icono = R.drawable.symbol_deforestacion;
+                                break;
+                            case 8:
+                                icono = R.drawable.symbol_zona_acampar;
+                                break;
+                            case 9:
+                                icono = R.drawable.symbol_derrumbe;
+                                break;
+                            case 10:
+                                icono = R.drawable.symbol_desarrollo_urbano;
+                                break;
+                            case 11:
+                                icono = R.drawable.symbol_desechos;
+                                break;
+                            case 12:
+                                icono = R.drawable.symbol_incendio;
+                                break;
+                            case 13:
+                                icono = R.drawable.symbol_inundacion;
+                                break;
+                            case 14:
+                                icono = R.drawable.symbol_paisaje;
+                                break;
+                            case 15:
+                                icono = R.drawable.symbol_playa;
+                                break;
+                            case 16:
+                                icono = R.drawable.symbol_rio;
+                                break;
+
+                            default:
+                                break;
+                        }
                         optionMarker[i] = new MarkerOptions()
                                 .position(UPV)
                                 .title(categoria_tit)
@@ -363,8 +413,8 @@ public class Mapa extends FragmentActivity implements GoogleMap.OnMyLocationChan
             pDialog.dismiss();
             Log.d("Tam M1",optionMarker.length+"");
             for (int i = 0; i < optionMarker.length; i++) {
-                Log.d("Dentro del For",i+" :"+optionMarker[i].getTitle());
-                AddMarker(optionMarker[i]);
+                Log.d("Dentro del For", i + " :" + optionMarker[i].getTitle());
+                mMap.addMarker(optionMarker[i]);
             }
         }
     }
