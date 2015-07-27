@@ -53,6 +53,14 @@
             android:configChanges="orientation"
             android:screenOrientation="portrait">
         </activity>
+        <activity
+            android:name=".verComentarios"
+            android:label="Evento"
+            android:parentActivityName=".Mapa"
+            android:configChanges="orientation"
+            android:windowSoftInputMode="adjustResize"
+            android:screenOrientation="portrait">
+        </activity>
     </application>
 
 </manifest>

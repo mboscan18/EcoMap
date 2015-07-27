@@ -1,5 +1,6 @@
 package com.miguelboscan.ecomap;
 
+import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -13,13 +14,19 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.location.Location;
 import android.location.LocationManager;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.v4.app.DialogFragment;
 import android.text.format.Time;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -32,7 +39,10 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.net.Uri;
 import android.widget.Toast;
+
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 
 import static com.miguelboscan.ecomap.R.*;
 
@@ -40,12 +50,13 @@ import static com.miguelboscan.ecomap.R.*;
  * Created by Miguel on 05/06/2015.
  */
 
-public class AgregarEvento extends Activity implements OnClickListener, AdapterView.OnItemSelectedListener {
+public class AgregarEvento extends Activity implements AdapterView.OnItemSelectedListener {
     private EditText tituloEvento, comentario_nuevo_evento, cat_event_nuevo;
-    private Button  addEvento;
+    private Button  addEvento, quitarImagen;
     private Double latitud, longitud;
-    private String archivo, fecha, hora, latitud1, longitud1;
+    private String archivo, fecha, hora;
     private Spinner cat_event_nuev;
+    private ImageButton cargarArchivo;
 
 
     // Progress Dialog
@@ -71,10 +82,13 @@ public class AgregarEvento extends Activity implements OnClickListener, AdapterV
 
     //testing on Emulator:
     private static final String REGISTER_URL = "http://eco-map.esy.es/BD_Function/agregarEvento.php";
+    private static final String UPLOAD_URL = "http://eco-map.esy.es/BD_Function/upload_File.php.php";
 
     //ids
     private static final String TAG_SUCCESS = "success";
     private static final String TAG_MESSAGE = "message";
+
+    Bitmap photobmp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,8 +98,11 @@ public class AgregarEvento extends Activity implements OnClickListener, AdapterV
 
         tituloEvento = (EditText)findViewById(id.tituloEvento);
         comentario_nuevo_evento = (EditText)findViewById(id.comentario_nuevo_evento);
-
+        cargarArchivo = (ImageButton)findViewById(id.ImageButtonSubirArchivo);
         addEvento = (Button)findViewById(id.agregarEvento);
+        quitarImagen = (Button)findViewById(id.ButtonQuitarImagen);
+
+        quitarImagen.setVisibility(View.INVISIBLE);
 
         //Obtenemos una referencia al LocationManager
         LocationManager locManager = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
@@ -107,14 +124,40 @@ public class AgregarEvento extends Activity implements OnClickListener, AdapterV
         hora = sdfH.format(c.getTime());
 
 
+        addEvento.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new CreateUser().execute();
+            }
+        });
 
-        addEvento.setOnClickListener(this);
+        cargarArchivo.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent();
+                intent.setType("*/*");
+                intent.setAction(Intent.ACTION_GET_CONTENT);
+                startActivityForResult(Intent.createChooser(intent, "Complete la accion usando..."), 1);
+            }
+        });
+
+        quitarImagen.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                cargarArchivo.setBackgroundResource(drawable.fondo_icono_add_archivo);
+                archivo = "NO FILE";
+                Toast_Personalizado toast = new Toast_Personalizado(AgregarEvento.this, "Archivo Deseleccionado", Toast.LENGTH_LONG, "error");
+                toast.show();
+                quitarImagen.setVisibility(View.INVISIBLE);
+            }
+        });
 
 
 
 
         cat_event_nuev = (Spinner) findViewById(id.cat_event_nuevo);
         cat_event_nuev.setAdapter(new MyAdapter(AgregarEvento.this, R.layout.row, strings));
+        cat_event_nuev.setOnItemSelectedListener(this);
 
 // Create an ArrayAdapter using the string array and a default spinner layout
         //ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
@@ -122,18 +165,66 @@ public class AgregarEvento extends Activity implements OnClickListener, AdapterV
 // Specify the layout to use when the list of choices appears
        // adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 // Apply the adapter to the spinner
-        cat_event_nuev.setOnItemSelectedListener(this);
         //cat_event_nuev.setAdapter(adapter);
        // cat_event_nuev.setBackgroundResource(drawable.symbol_aguas_residuales);
     }
 
     @Override
-    public void onClick(View v) {
-        // TODO Auto-generated method stub
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == 1 && resultCode == RESULT_OK) {
+            Uri fileSelected = data.getData();
+            archivo = getRealPathFromURI(fileSelected);
+            String[] str = archivo.split("\\.");
+            Log.d("tipo",str[1]);
+            quitarImagen.setVisibility(View.VISIBLE);
 
-        new CreateUser().execute();
+            // Es una Imagen
+            if((str[1].equals("jpg") == true) || (str[1].equals("jpeg") == true) || (str[1].equals("png") == true) || (str[1].equals("gif") == true)){
+                cargarArchivo.setBackgroundResource(drawable.icono_image_added);
+                Toast_Personalizado toast = new Toast_Personalizado(AgregarEvento.this, "Imagen Seleccionada Correctamente", Toast.LENGTH_LONG, "success");
+                toast.show();
+            }else
+            // Es un archivo de Audio
+            if((str[1].equals("mpeg4") == true) || (str[1].equals("mpeg") == true) || (str[1].equals("aac") == true) || (str[1].equals("wav") == true) || (str[1].equals("ogg") == true) || (str[1].equals("midi") == true) || (str[1].equals("x-ms-wma") == true)){
+                cargarArchivo.setBackgroundResource(drawable.icono_audio_added);
+                Toast_Personalizado toast = new Toast_Personalizado(AgregarEvento.this, "Archivo de Audio Seleccionado Correctamente", Toast.LENGTH_LONG, "success");
+                toast.show();
+            }else
+            // Es un Video
+            if((str[1].equals("mp4") == true) || (str[1].equals("x-msvideo") == true) || (str[1].equals("x-ms-wmv") == true)){
+                cargarArchivo.setBackgroundResource(drawable.symbol_bote_agua);
+                Toast_Personalizado toast = new Toast_Personalizado(AgregarEvento.this, "Video Seleccionado Correctamente", Toast.LENGTH_LONG, "success");
+                toast.show();
+            }else
+            // Cualquier otro tipo de archivo
+            {
+                cargarArchivo.setBackgroundResource(drawable.icono_file_added);
+                Toast_Personalizado toast = new Toast_Personalizado(AgregarEvento.this, "Archivo Seleccionado Correctamente", Toast.LENGTH_LONG, "success");
+                toast.show();
+            }
 
+            Log.d("FILE NAME",archivo);
+
+        }
     }
+
+
+
+    public String getRealPathFromURI(Uri contentUri) {
+        Cursor cursor = null;
+        try {
+            String[] proj = { MediaStore.Images.Media.DATA };
+            cursor = getApplicationContext().getContentResolver().query(contentUri,  proj, null, null, null);
+            int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+            cursor.moveToFirst();
+            return cursor.getString(column_index);
+        } finally {
+            if (cursor != null) {
+                cursor.close();
+            }
+        }
+    }
+
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -245,6 +336,13 @@ public class AgregarEvento extends Activity implements OnClickListener, AdapterV
                         }
                     });
                     sw = 1;
+                    if(archivo.equals("NO FILE") == true){
+                        new HttpRequest(UPLOAD_URL, "POST")
+                                .part("archivo", "file.png", new File(archivo))
+                                .part("path","path/")
+                                .code();
+                    }
+
 
                 }else{
                     Log.d("Registering Failure!", json.getString(TAG_MESSAGE));
@@ -278,5 +376,18 @@ public class AgregarEvento extends Activity implements OnClickListener, AdapterV
                 Toast.makeText(AgregarEvento.this, file_url, Toast.LENGTH_LONG).show();
             }
         }
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if ((keyCode == KeyEvent.KEYCODE_BACK)) {
+
+            Intent returnIntent = new Intent();
+            setResult(RESULT_OK,returnIntent);
+            AgregarEvento.this.finish();
+
+            return false;
+        }
+        return super.onKeyDown(keyCode, event);
     }
 }

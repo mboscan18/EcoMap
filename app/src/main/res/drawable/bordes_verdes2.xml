@@ -4,6 +4,9 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:shape="rectangle" >
     <solid android:color="@color/md_light_green_600"/>
+    <corners
+        android:bottomLeftRadius="20dp"
+        android:bottomRightRadius="20dp"/>
     <stroke
         android:width="3dp"
         android:color="@color/md_light_green_700"/>

@@ -73,6 +73,10 @@ public class Mapa extends FragmentActivity implements GoogleMap.OnMyLocationChan
     private ProgressDialog pDialog;
     private MarkerOptions[] optionMarker;
     private Double latitudCentro, longitudCentro;
+    private String[] eventosTit, eventosCat, comentariosCom;
+    private int[] eventosId;
+    private int id_ev_select;
+    private String categoria_select;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -108,7 +112,6 @@ public class Mapa extends FragmentActivity implements GoogleMap.OnMyLocationChan
             // Make sure the request was successful
             if (resultCode == RESULT_OK) {
                 mMap.setOnMyLocationChangeListener(Mapa.this);
-                circle.setStrokeColor(getResources().getColor(R.color.md_transparent));
             }
         }
     }
@@ -190,23 +193,6 @@ public class Mapa extends FragmentActivity implements GoogleMap.OnMyLocationChan
 
     }
 
-    /**
-     *
-     * @param marker Recibe el marcador pulsado
-     * @return
-     */
-    @Override
-    public boolean onMarkerClick(Marker marker) {
-        Toast.makeText(this, marker.getTitle(), Toast.LENGTH_SHORT).show();
-        String tit, cat;
-        TituloEvento = marker.getSnippet();
-        CategoriaEvento = marker.getTitle();
-        final DialogFragment dialogoPreseleccionEvento = new Preseleccion_Evento();
-        dialogoPreseleccionEvento.show(Mapa.this.getFragmentManager(), "Preseleccion_Evento");
-
-
-        return false;
-    }
 
     @Override
     public void onMapClick(LatLng latLng) {
@@ -238,6 +224,32 @@ public class Mapa extends FragmentActivity implements GoogleMap.OnMyLocationChan
         }
 
     }
+
+    /**
+     *
+     * @param marker Recibe el marcador pulsado
+     * @return
+     */
+    @Override
+    public boolean onMarkerClick(Marker marker) {
+        TituloEvento = marker.getSnippet();
+        CategoriaEvento = marker.getTitle();
+
+        for (int i = 0; i < eventos.length(); i++) {
+            String[] str = marker.getSnippet().split("\\.");
+            if(str[0].equals(i+"") == true){
+                TituloEvento = eventosTit[i];
+                CategoriaEvento = eventosCat[i];
+                id_ev_select = eventosId[i];
+            }
+        }
+        final DialogFragment dialogoPreseleccionEvento = new Preseleccion_Evento();
+        dialogoPreseleccionEvento.setStyle(android.support.v4.app.DialogFragment.STYLE_NO_TITLE,R.style.FondoTransparente);
+        dialogoPreseleccionEvento.show(Mapa.this.getFragmentManager(), "Preseleccion_Evento");
+        return false;
+    }
+
+
     public class Preseleccion_Evento extends DialogFragment {
 
         private Button VerEventos;
@@ -258,11 +270,17 @@ public class Mapa extends FragmentActivity implements GoogleMap.OnMyLocationChan
             tituloEvento.setText(TituloEvento);
             categoriaEvento.setText(CategoriaEvento);
 
-            // Accion a ralizar cuando se presione el boton Sobrescribir
+
+            // Accion a ralizar cuando se presione el boton Ver Evento
             VerEventos.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
+                    Intent intent = new Intent(getActivity(), verComentarios.class);
+                    intent.putExtra("evento", id_ev_select);
+                    intent.putExtra("categoria", CategoriaEvento);
+                    intent.putExtra("titulo", TituloEvento);
+                    startActivityForResult(intent,1);
+                    Preseleccion_Evento.this.getDialog().dismiss();
                 }
             });
 
@@ -314,10 +332,12 @@ public class Mapa extends FragmentActivity implements GoogleMap.OnMyLocationChan
                     eventos = json.getJSONArray(TAG_OBJETO_EVENTOS);
                     comentarios = json.getJSONArray(TAG_OBJETO_COMENTARIOS);
                     optionMarker = new MarkerOptions[eventos.length()];
+                    eventosCat = new String[eventos.length()];
+                    eventosTit = new String[eventos.length()];
+                    eventosId = new int[eventos.length()];
+                    comentariosCom = new String[eventos.length()];
 
                     // looping through All Products
-                    Log.d("Tam Evento",eventos.length()+"");
-                    Log.d("Tam Comentario",comentarios.length()+"");
                     for (int i = 0; i < eventos.length(); i++) {
                         JSONObject ev = eventos.getJSONObject(i);
                         JSONObject cm = comentarios.getJSONObject(i);
@@ -330,7 +350,10 @@ public class Mapa extends FragmentActivity implements GoogleMap.OnMyLocationChan
                         String titulo = ev.getString(TAG_TITULO);
                         int categoria = ev.getInt(TAG_CATEGORIA);
                         String categoria_tit = ev.getString(TAG_CATEGORIA_TIT);
-                        String comentario = cm.getString(TAG_COMENTARIO);
+                        comentariosCom[i] = cm.getString(TAG_COMENTARIO);
+                        eventosId[i] = ev.getInt(TAG_ID);
+                        eventosTit[i] = ev.getString(TAG_TITULO);
+                        eventosCat[i] = ev.getString(TAG_CATEGORIA_TIT);
 
                         UPV = new LatLng(lat, lon);
 
@@ -391,10 +414,9 @@ public class Mapa extends FragmentActivity implements GoogleMap.OnMyLocationChan
                         optionMarker[i] = new MarkerOptions()
                                 .position(UPV)
                                 .title(categoria_tit)
-                                .snippet(titulo)
+                                .snippet(i+". "+titulo)
                                 .icon(BitmapDescriptorFactory.fromResource(icono))
                                 .anchor(0.5f, 0.5f);
-                        Log.d("Dentro del For del pre",i+" :"+optionMarker[i].getTitle());
 
                     }
                 }
@@ -409,11 +431,8 @@ public class Mapa extends FragmentActivity implements GoogleMap.OnMyLocationChan
          * **/
         protected void onPostExecute(String file_url) {
             // dismiss the dialog after getting all products
-            MarkerOptions m;
             pDialog.dismiss();
-            Log.d("Tam M1",optionMarker.length+"");
             for (int i = 0; i < optionMarker.length; i++) {
-                Log.d("Dentro del For", i + " :" + optionMarker[i].getTitle());
                 mMap.addMarker(optionMarker[i]);
             }
         }

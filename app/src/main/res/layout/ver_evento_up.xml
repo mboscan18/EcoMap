@@ -3,33 +3,31 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:fitsSystemWindows="false"
     android:orientation="vertical"
-    android:background="@color/md_transparent"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     tools:context=".Mapa"
     android:id="@+id/layoutConfirmaExitTest"
+    android:background="@drawable/fondo"
     android:weightSum="1">
 
 
+
     <LinearLayout
-        android:orientation="horizontal"
+        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="220dp"
+        android:layout_height="290dp"
         android:layout_gravity="center_horizontal"
-        android:paddingLeft="10dp"
-        android:background="@drawable/bordes_prueba"
         android:weightSum="1">
 
         <ImageView
-            android:layout_width="120dp"
+            android:layout_width="match_parent"
             android:layout_height="200dp"
             android:id="@+id/imageViewver"
-            android:layout_gravity="center_vertical"
-            android:focusable="false" />
+            android:padding="10dp" />
 
         <FrameLayout
-            android:layout_width="3dp"
-            android:layout_height="match_parent"
+            android:layout_width="match_parent"
+            android:layout_height="3dp"
             android:background="@color/md_light_green_700"></FrameLayout>
 
         <LinearLayout
@@ -37,17 +35,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Bote de basura cerca del conjunto residencial doña emilia"
-                android:id="@+id/titulo_Evento_up"
-                android:layout_gravity="center_horizontal"
-                android:layout_weight="0.6"
-                android:gravity="center_vertical|center_horizontal"
-                android:fontFamily="Verdana"
-                android:textColor="#000000"
-                android:textSize="15dp" />
+
 
             <TextView
                 android:layout_width="match_parent"
@@ -62,38 +50,83 @@
                 android:textIsSelectable="false"
                 android:textSize="18dp"
                 android:textStyle="bold" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Bote de basura cerca del conjunto residencial doña emilia"
+                android:id="@+id/titulo_Evento_up"
+                android:layout_gravity="center_horizontal"
+                android:layout_weight="0.6"
+                android:gravity="center_vertical|center_horizontal"
+                android:fontFamily="Verdana"
+                android:textColor="#000000"
+                android:textSize="15dp" />
+
         </LinearLayout>
     </LinearLayout>
 
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"></FrameLayout>
+        android:layout_height="3dp"
+        android:background="@color/md_light_green_700"></FrameLayout>
 
-    <ScrollView
+    <LinearLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="300dp"
-        android:id="@+id/scrollView"
-        android:layout_gravity="center_horizontal" >
+        android:layout_height="match_parent"
+        android:layout_gravity="center_horizontal"
+        android:weightSum="1">
 
-        <LinearLayout
-            android:orientation="vertical"
+
+        <ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:id="@+id/comentarioNu"></LinearLayout>
-    </ScrollView>
+            android:id="@+id/scrollView"
+            android:layout_gravity="center_horizontal"
+            android:layout_weight="0.8">
 
-    <EditText
-        android:layout_width="300dp"
-        android:layout_height="wrap_content"
-        android:id="@+id/comenta"
-        android:layout_gravity="left" />
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/comentarioNu"></LinearLayout>
+        </ScrollView>
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:text="New Comentar"
-        android:id="@+id/addComent"
-        android:layout_gravity="right" />
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:weightSum="1"
+            android:layout_weight="0.2">
+
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:id="@+id/comenta"
+                android:inputType="textPersonName"
+                android:gravity="center_horizontal"
+                android:ems="9"
+                android:layout_gravity="center"
+                android:hint="Nuevo Comentario"
+                android:textColorHint="@color/md_disabled_hint_text"
+                android:layout_centerHorizontal="true"
+                android:elegantTextHeight="false"
+                android:singleLine="false"
+                android:nextFocusDown="@id/comenta"
+                android:nextFocusUp="@id/comenta"
+                android:layout_weight="0.8" />
+
+            <Button
+                android:layout_width="100dp"
+                android:layout_height="match_parent"
+                android:text="Agregar Comentario"
+                android:id="@+id/addComent"
+                android:background="#81c784"
+                android:textColor="#fffde7"
+                android:layout_weight="0.2" />
+        </LinearLayout>
+
+    </LinearLayout>
+
 
 </LinearLayout>

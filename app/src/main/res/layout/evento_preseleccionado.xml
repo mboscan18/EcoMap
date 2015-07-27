@@ -47,7 +47,9 @@
                 android:textColor="#ff689e38"
                 android:textIsSelectable="false"
                 android:textSize="18dp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp" />
 
             <TextView
                 android:layout_width="match_parent"
